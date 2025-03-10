@@ -14,14 +14,12 @@ Generate an answer using **GPT-based models**, citing the **source book and page
 --- 
 
 ### **Choice of Embedding Model: `all-MiniLM-L6-v2`**  
-To transform text into numerical vectors for similarity search, we use `all-MiniLM-L6-v2`, a model from `sentence-transformers`. This model is optimized for **semantic search**, providing a **good balance between accuracy and speed**. It allows FAISS to efficiently retrieve relevant text chunks based on meaning rather than exact word matches, ensuring **fast and precise query results** while keeping resource usage low.
+To transform text into numerical vectors for similarity search, I use `all-MiniLM-L6-v2`, a model from `sentence-transformers`. This model is optimized for **semantic search**, providing a **good balance between accuracy and speed**. It allows FAISS to efficiently retrieve relevant text chunks based on meaning rather than exact word matches, ensuring **fast and precise query results** while keeping resource usage low.
 
-### **1️Extracting Text from PDFs**  
-The first challenge was handling **PDF books**, as text extraction is often unreliable. Many PDFs do not store text in a structured way, and some use **images instead of text**, making direct extraction difficult.  
-
+### **1️ Extracting Text from PDFs**  
 I used `PyPDF2` to **extract text page by page**, keeping track of where each page starts in the document. This allows me to later map any extracted text **back to its original page number**.  
 
-### **2️Splitting the Text into Meaningful Chunks**  
+### **2️ Splitting the Text into Meaningful Chunks**  
 Once the text is extracted, we need to **split it into small excerpts** (called "chunks") to improve searchability. However, **splitting text incorrectly** (for example, mid-sentence) would lead to **incomplete answers**.  
 
 To solve this, we use **`RecursiveCharacterTextSplitter`** from `LangChain`, which breaks the text **at natural points** (`"\n\n"`, `"\n"`, `" "`, `""`) while keeping **overlapping text** between chunks to preserve context.  
@@ -32,7 +30,7 @@ To solve this, we use **`RecursiveCharacterTextSplitter`** from `LangChain`, whi
 
 ---
 
-### **3️Indexing the Books for Fast Search**  
+### **3️ Indexing the Books for Fast Search**  
 To make searches **fast**, we use **FAISS**, a **vector-based search engine** that stores **embeddings** of text excerpts instead of raw text. This allows us to **search by meaning**, rather than exact word matches.  
 
 Each book gets **its own FAISS index**, allowing us to:  
@@ -46,7 +44,7 @@ Each book gets **its own FAISS index**, allowing us to:
 
 ---
 
-### **4️Searching and Filtering the Best Excerpts**  
+### **4️ Searching and Filtering the Best Excerpts**  
 When a user asks a question, the system first **retrieves the most relevant excerpts** using FAISS. However, a key challenge was ensuring **results are diverse**, otherwise a query comparing **Harry Potter and Hunger Games** could return **only Harry Potter excerpts**.  
 
 I solve this by:  
