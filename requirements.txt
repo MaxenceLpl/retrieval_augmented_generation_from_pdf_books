@@ -1,0 +1,21 @@
+# PDF Processing
+pdfminer.six  
+
+# FAISS for Vector Search
+faiss-cpu  
+
+# Sentence Embeddings
+sentence-transformers  
+
+# OpenAI API for LLM
+openai  
+
+# LangChain for Document Handling & Vector Search
+langchain  
+langchain-community  
+
+# LlamaIndex for Document Indexing
+llama-index  
+
+tqdm 
+huggingface_hub
