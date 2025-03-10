@@ -110,7 +110,7 @@ Manages **FAISS indexes** for efficient search. Supports:
 - **`build_indexes(documents)`** → Creates an **FAISS index for each book**.  
 - **`save_indexes()`** → Saves indexes to disk.  
 - **`load_indexes()`** → Loads saved indexes.  
-- **`search(query, books=None, k=10)`** → Finds **the best excerpts** across selected books.  
+- **`search(query, books=None, nb_extracts=10, max_extracts_per_book=5)`** → Finds **the best excerpts** across selected books.  
 
 ---
 
