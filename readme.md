@@ -20,18 +20,18 @@ To transform text into numerical vectors for similarity search, I use `all-MiniL
 I used `PyPDF2` to **extract text page by page**, keeping track of where each page starts in the document. This allows me to later map any extracted text **back to its original page number**.  
 
 ### **2️ Splitting the Text into Meaningful Chunks**  
-Once the text is extracted, we need to **split it into small excerpts** (called "chunks") to improve searchability. However, **splitting text incorrectly** (for example, mid-sentence) would lead to **incomplete answers**.  
+Once the text is extracted, I need to **split it into small excerpts** (called "chunks") to improve searchability. However, **splitting text incorrectly** (for example, mid-sentence) would lead to **incomplete answers**.  
 
-To solve this, we use **`RecursiveCharacterTextSplitter`** from `LangChain`, which breaks the text **at natural points** (`"\n\n"`, `"\n"`, `" "`, `""`) while keeping **overlapping text** between chunks to preserve context.  
+To solve this, I use **`RecursiveCharacterTextSplitter`** from `LangChain`, which breaks the text **at natural points** (`"\n\n"`, `"\n"`, `" "`, `""`) while keeping **overlapping text** between chunks to preserve context.  
 
 **What changed?**  
-- Instead of randomly splitting, we now **maintain page numbers** for each chunk.  
+- Instead of randomly splitting, I now **maintain page numbers** for each chunk.  
 - The system finds the **page range** of a chunk using `page_map`, ensuring **accurate citations** in the final response.  
 
 ---
 
 ### **3️ Indexing the Books for Fast Search**  
-To make searches **fast**, we use **FAISS**, a **vector-based search engine** that stores **embeddings** of text excerpts instead of raw text. This allows us to **search by meaning**, rather than exact word matches.  
+To make searches **fast**, I use **FAISS**, a **vector-based search engine** that stores **embeddings** of text excerpts instead of raw text. This allows us to **search by meaning**, rather than exact word matches.  
 
 Each book gets **its own FAISS index**, allowing us to:  
 - Search **within a single book**  
@@ -53,8 +53,8 @@ I solve this by:
 3. Sorting by **relevance and diversity**  
 
 **What changed?**  
-- Instead of retrieving **only the top-scoring results**, we **balance** results across books.  
-- If a book has **too many results**, we **limit** it to prevent it from dominating the answer.  
+- Instead of retrieving **only the top-scoring results**, I **balance** results across books.  
+- If a book has **too many results**, I **limit** it to prevent it from dominating the answer.  
 
 ---
 
